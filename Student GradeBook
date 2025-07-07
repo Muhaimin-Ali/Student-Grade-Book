@@ -1,0 +1,82 @@
+---
+
+### 💻 `gradebook.py` Code:
+
+```python
+# gradebook.py
+
+students = []
+
+def add_student():
+    name = input("Enter student name: ")
+    try:
+        marks = float(input("Enter marks (0-100): "))
+        if 0 <= marks <= 100:
+            students.append({"name": name, "marks": marks})
+            print(f"{name} added successfully.")
+        else:
+            print("Marks must be between 0 and 100.")
+    except ValueError:
+        print("Invalid input. Please enter numeric marks.")
+
+def show_students():
+    if not students:
+        print("No records yet.")
+        return
+    print("\nName\t\tMarks")
+    print("-" * 25)
+    for student in students:
+        print(f"{student['name']}\t\t{student['marks']}")
+
+def calculate_average():
+    if not students:
+        print("No data to calculate average.")
+        return
+    avg = sum(s["marks"] for s in students) / len(students)
+    print(f"\nClass Average: {avg:.2f}")
+
+def search_student():
+    name = input("Enter name to search: ").lower()
+    found = [s for s in students if name in s["name"].lower()]
+    if found:
+        print("\nFound:")
+        for s in found:
+            print(f"{s['name']} - {s['marks']}")
+    else:
+        print("Student not found.")
+
+def sort_students():
+    if not students:
+        print("No students to sort.")
+        return
+    sorted_list = sorted(students, key=lambda x: x["marks"], reverse=True)
+    print("\nSorted by Marks:")
+    for s in sorted_list:
+        print(f"{s['name']} - {s['marks']}")
+
+while True:
+    print("\n--- Gradebook Menu ---")
+    print("1. Add Student")
+    print("2. Show Students")
+    print("3. Calculate Average")
+    print("4. Search Student")
+    print("5. Sort by Marks")
+    print("6. Exit")
+    
+    choice = input("Select option (1-6): ")
+    
+    if choice == '1':
+        add_student()
+    elif choice == '2':
+        show_students()
+    elif choice == '3':
+        calculate_average()
+    elif choice == '4':
+        search_student()
+    elif choice == '5':
+        sort_students()
+    elif choice == '6':
+        print("Goodbye!")
+        break
+    else:
+        print("Invalid option.")
